@@ -33,7 +33,7 @@ class CreateTextViewCell: UICollectionViewCell {
     }
     
     func configure(text: String) {
-        textView.attributedText = CreateTextViewCell.getAttributeText(text: text)
+        textView.text = CreateTextViewCell.getAttributeText(text: text).string
     }
     
     private class func getAttributeText(text: String) -> NSAttributedString {

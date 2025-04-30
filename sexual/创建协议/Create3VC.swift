@@ -25,6 +25,7 @@ class Create3VC: BaseViewController {
         view.addSubview(stepImageView)
         
         let scrollView = UIScrollView()
+        scrollView.layer.cornerRadius = 10
         scrollView.backgroundColor = .white
         scrollView.showsVerticalScrollIndicator = false
         view.addSubview(scrollView)

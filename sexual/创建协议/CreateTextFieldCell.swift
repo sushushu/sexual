@@ -13,6 +13,7 @@ class CreateTextFieldCell: UICollectionViewCell {
         let textField = UITextField()
         textField.placeholder = "请输入内容"
         textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        textField.tintColor = appThemeColor
         return textField
     }()
     private let arrowImageView = UIImageView()
