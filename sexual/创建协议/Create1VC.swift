@@ -253,7 +253,7 @@ class Create1VC: BaseViewController {
             case .agreementConditions:
                 headerView.configure(isRequired: false, title: "安全措施", tips: "")
             case .time:
-                headerView.configure(isRequired: true, title: "约定时间", tips: "(最长24小时)")
+                headerView.configure(isRequired: true, title: "约定时间", tips: "")
             case .sponsor:
                 headerView.configure(isRequired: true, title: "发起方", tips: "")
             case .sponsorCardId:

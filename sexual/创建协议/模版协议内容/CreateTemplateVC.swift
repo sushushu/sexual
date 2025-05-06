@@ -21,12 +21,17 @@ class CreateTemplateVC: BaseViewController {
             }
         }
     }
+    
+    /// 当前编辑的协议内容
+    private var currentContent: String = ""
+    
     private var conditions: [CreateTemplateConditionModel] = [
         CreateTemplateConditionModel(text: "使用避孕措施", isSelected: false),
         CreateTemplateConditionModel(text: "性传播疾病检测", isSelected: false),
         CreateTemplateConditionModel(text: "使用安全词", isSelected: false),
         CreateTemplateConditionModel(text: "禁止录音录像", isSelected: false)
     ]
+    
     enum Section: Int, CaseIterable {
         case content
         case conditions
@@ -49,8 +54,10 @@ class CreateTemplateVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         title = "协议内容"
+        
+        // 设置初始内容
+        currentContent = type.text
         
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.delegate = self
@@ -78,7 +85,7 @@ class CreateTemplateVC: BaseViewController {
                 return
             }
             let selectedConditions: [String] = self.conditions.filter { $0.isSelected }.map { $0.text }
-            self.confirmClsoure?((self.type.text, selectedConditions))
+            self.confirmClsoure?((self.currentContent, selectedConditions))
             self.navigationController?.popViewController(animated: true)
         }), for: .touchUpInside)
         
@@ -96,9 +103,12 @@ class CreateTemplateVC: BaseViewController {
     func initDatasource() {
         weak var weakself = self
         
-        let textCellRegistration = UICollectionView.CellRegistration<CreateTextCell, Item> { cell, indexPath, itemIdentifier in
+        let textCellRegistration = UICollectionView.CellRegistration<CreateTemplateTextCell, Item> { cell, indexPath, itemIdentifier in
             cell.backgroundColor = hexColor(0xF7F7F8)
-            cell.configure(content: weakself?.type.text ?? "")
+            cell.configure(content: weakself?.currentContent ?? "")
+            cell.textDidChangeHandler = { [weak self] newText in
+                self?.currentContent = newText
+            }
         }
         let selectCellRegistration = UICollectionView.CellRegistration<CreateTemplate1ConditionCell, CreateTemplateConditionModel> { cell, indexPath, itemIdentifier in
             cell.backgroundColor = hexColor(0xF7F7F8)
@@ -141,7 +151,7 @@ extension CreateTemplateVC: UICollectionViewDelegate, UICollectionViewDelegateFl
         let width = collectionView.bounds.width - 40
         switch item {
         case .text:
-            let height = CreateTextCell.getHeight(content: type.text, limitWidth: width)
+            let height = CreateTemplateTextCell.getHeight(content: currentContent, limitWidth: width)
             return CGSize(width: width, height: height)
         default:
             return CGSize(width: width, height: 40)
