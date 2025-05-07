@@ -30,11 +30,44 @@ class Create3VC: BaseViewController {
         scrollView.showsVerticalScrollIndicator = false
         view.addSubview(scrollView)
         
+        let checkBgView = UIView()
+        view.addSubview(checkBgView)
+        let checkButton = UIButton(type: .custom)
+        checkBgView.addSubview(checkButton)
+        checkButton.setImage(UIImage(named: "check_select"), for: .selected)
+        checkButton.setImage(UIImage(named: "check_unselect"), for: .normal)
+        checkBgView.addSubview(checkButton)
+        let checkTipsLabel = UILabel()
+        let font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        checkTipsLabel.attributedText = attributionString("我已明确知悉该协议不具备法律效应，仅供协议双方娱乐使用", font: font, color: hexColor(000000, alpha: 0.65), lineHeight: 12)
+        checkBgView.addSubview(checkTipsLabel)
+        checkButton.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(20)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(16)
+        }
+        checkTipsLabel.snp.makeConstraints { make in
+            make.left.equalTo(checkButton.snp.right).offset(3)
+            make.centerY.equalToSuperview()
+        }
+        weak var weakself = self
+        checkButton.addAction(UIAction(handler: { _ in
+            checkButton.isSelected.toggle()
+        }), for: .touchUpInside)
+        
         let nextButton = generalButton()
         nextButton.setTitle("生成协议", for: .normal)
         view.addSubview(nextButton)
-        weak var weakself = self
         nextButton.addAction(UIAction(handler: { _ in
+            guard checkButton.isSelected else {
+                let alert = UIAlertController(title: nil, message: "请仔细阅读协议内容，并进行同意", preferredStyle: .alert)
+                let action = UIAlertAction(title: "我已知晓", style: .default) { _ in
+                    checkButton.isSelected.toggle()
+                }
+                alert.addAction(action)
+                weakself?.present(alert, animated: true)
+                return
+            }
             // 创建 DateFormatter 实例
             let dateFormatter = DateFormatter()
             // 示例 1: 转换为 "yyyy-MM-dd" 格式的字符串
@@ -59,7 +92,7 @@ class Create3VC: BaseViewController {
         scrollView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(10)
             make.top.equalTo(stepImageView.snp.bottom)
-            make.bottom.equalTo(nextButton.snp.top).offset(-10)
+            make.bottom.equalTo(checkBgView.snp.top).offset(-10)
         }
         nextButton.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(10)
@@ -67,6 +100,11 @@ class Create3VC: BaseViewController {
             make.height.equalTo(50)
         }
         
+        checkBgView.snp.makeConstraints { make in
+            make.bottom.equalTo(nextButton.snp.top).offset(-10)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(30)
+        }
         let agreementView = AgreementView()
         scrollView.addSubview(agreementView)
         agreementView.snp.makeConstraints { make in

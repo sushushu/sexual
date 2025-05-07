@@ -182,7 +182,7 @@ class Create1VC: BaseViewController {
             cell.backgroundColor = hexColor(0xF7F7F8)
             switch itemIdentifier {
             case .templateBase:
-                cell.configure(title: "基础同意协议", detail: "最基本的性同意协议，包含必要的同意表述和安全措施")
+                cell.configure(title: "基础同意协议", detail: "最基本的协议，包含必要的同意表述和安全措施")
                 cell.buttonAction = {
                     let vc = CreateTemplateVC(type: .base)
                     weakself?.navigationController?.pushViewController(vc, animated: true)
@@ -193,7 +193,7 @@ class Create1VC: BaseViewController {
                     }
                 }
             case .templateDetail:
-                cell.configure(title: "详细同意协议", detail: "更详细的性同意协议，包含具体行为边界和个人偏好")
+                cell.configure(title: "详细同意协议", detail: "更详细的协议，包含具体行为边界和个人偏好")
                 cell.buttonAction = {
                     let vc = CreateTemplateVC(type: .detail)
                     weakself?.navigationController?.pushViewController(vc, animated: true)

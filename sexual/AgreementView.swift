@@ -209,6 +209,21 @@ class AgreementView: UIView {
                 make.top.equalTo(additonalTitleLabel.snp.bottom)
                 make.left.right.equalToSuperview().inset(horizontalSpacing)
             }
+            let tipsTitleLabel = UILabel()
+            tipsTitleLabel.attributedText = getTtitleAttributedString(text: "注意事项")
+            addSubview(tipsTitleLabel)
+            let tipsDetailLabel = UILabel()
+            tipsDetailLabel.attributedText = getDetailAttributedString(text: "本协议不具备法律效应，仅供协议双方娱乐使用")
+            addSubview(tipsDetailLabel)
+            tipsTitleLabel.snp.makeConstraints { make in
+                make.top.equalTo(additonalLabel.snp.bottom).offset(verticalSpacing)
+                make.left.equalToSuperview().offset(horizontalSpacing)
+            }
+            tipsDetailLabel.snp.makeConstraints { make in
+                make.top.equalTo(tipsTitleLabel.snp.bottom)
+                make.left.right.equalToSuperview().inset(horizontalSpacing)
+            }
+            
             let signTitleLabel = UILabel()
             signTitleLabel.attributedText = getTtitleAttributedString(text: "协议签署")
             addSubview(signTitleLabel)
@@ -225,7 +240,7 @@ class AgreementView: UIView {
             signInviteeDateLabel.attributedText = getDetailAttributedString(text: "签署日期:")
             addSubview(signInviteeDateLabel)
             signTitleLabel.snp.makeConstraints { make in
-                make.top.equalTo(additonalLabel.snp.bottom).offset(verticalSpacing)
+                make.top.equalTo(tipsDetailLabel.snp.bottom).offset(verticalSpacing)
                 make.left.equalToSuperview().offset(horizontalSpacing)
             }
             signSponsorLabel.snp.makeConstraints { make in
