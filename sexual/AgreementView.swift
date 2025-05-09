@@ -13,12 +13,26 @@ class AgreementView: UIView {
     
     
     func setupUI(model:AgreementModel, isSign: Bool) {
+        // 添加免责声明在顶部
+        let disclaimerLabel = UILabel()
+        disclaimerLabel.attributedText = getDisclaimerAttributedString(text: "此记录仅代表沟通时的意愿，可能随实际情况变化。不具备任何法律效力，仅用于促进双方沟通。")
+        disclaimerLabel.numberOfLines = 0
+        disclaimerLabel.textAlignment = .center
+        disclaimerLabel.backgroundColor = hexColor(0xFFECEC)
+        disclaimerLabel.layer.cornerRadius = 5
+        disclaimerLabel.layer.masksToBounds = true
+        addSubview(disclaimerLabel)
+        disclaimerLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(verticalSpacing/2)
+            make.left.right.equalToSuperview().inset(horizontalSpacing/2)
+        }
+        
         let titleLabel = UILabel()
         titleLabel.textAlignment = .center
         addSubview(titleLabel)
         titleLabel.text = model.title
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(verticalSpacing)
+            make.top.equalTo(disclaimerLabel.snp.bottom).offset(verticalSpacing)
             make.left.right.equalToSuperview().inset(horizontalSpacing)
         }
         
@@ -67,7 +81,7 @@ class AgreementView: UIView {
         }
         
         let inviteeLabel1 = UILabel()
-        inviteeLabel1.attributedText = getTtitleAttributedString(text: "被邀请方:")
+        inviteeLabel1.attributedText = getTtitleAttributedString(text: "受邀方:")
         addSubview(inviteeLabel1)
         let inviteeLabel2 = UILabel()
         inviteeLabel2.attributedText = getDetailAttributedString(text: model.invitee)
@@ -96,7 +110,7 @@ class AgreementView: UIView {
         }
         
         let contentTitleLabel = UILabel()
-        contentTitleLabel.attributedText = getTtitleAttributedString(text: "协议详情")
+        contentTitleLabel.attributedText = getTtitleAttributedString(text: "沟通内容")
         addSubview(contentTitleLabel)
         let contentLabel = UILabel()
         contentLabel.attributedText = getDetailAttributedString(text: model.content)
@@ -141,7 +155,7 @@ class AgreementView: UIView {
         
         let ccLabel = conditionLabel ?? contentLabel
         let timeTitleLabel = UILabel()
-        timeTitleLabel.attributedText = getTtitleAttributedString(text: "约定时间")
+        timeTitleLabel.attributedText = getTtitleAttributedString(text: "沟通时间")
         addSubview(timeTitleLabel)
         let timeLabel = UILabel()
         timeLabel.attributedText = getDetailAttributedString(text: "\(model.startDate)-\(model.endDate)")
@@ -156,7 +170,7 @@ class AgreementView: UIView {
         }
         
         let privacyTitleLabel = UILabel()
-        privacyTitleLabel.attributedText = getTtitleAttributedString(text: "隐私条款")
+        privacyTitleLabel.attributedText = getTtitleAttributedString(text: "隐私说明")
         addSubview(privacyTitleLabel)
         let privacyLabel = UILabel()
         privacyLabel.attributedText = getDetailAttributedString(text: model.privacy)
@@ -172,7 +186,7 @@ class AgreementView: UIView {
         }
         
         let regretTitleLabel = UILabel()
-        regretTitleLabel.attributedText = getTtitleAttributedString(text: "撤回同意条款")
+        regretTitleLabel.attributedText = getTtitleAttributedString(text: "意愿变更说明")
         addSubview(regretTitleLabel)
         let regreLabel = UILabel()
         regreLabel.attributedText = getDetailAttributedString(text: model.regret)
@@ -188,7 +202,7 @@ class AgreementView: UIView {
         }
         
         let additonalTitleLabel = UILabel()
-        additonalTitleLabel.attributedText = getTtitleAttributedString(text: "附加条款")
+        additonalTitleLabel.attributedText = getTtitleAttributedString(text: "补充说明")
         addSubview(additonalTitleLabel)
         let additonalLabel = UILabel()
         additonalLabel.attributedText = getDetailAttributedString(text: model.additional.isEmpty ? "无" : model.additional)
@@ -210,10 +224,11 @@ class AgreementView: UIView {
                 make.left.right.equalToSuperview().inset(horizontalSpacing)
             }
             let tipsTitleLabel = UILabel()
-            tipsTitleLabel.attributedText = getTtitleAttributedString(text: "注意事项")
+            tipsTitleLabel.attributedText = getTtitleAttributedString(text: "特别提示")
             addSubview(tipsTitleLabel)
             let tipsDetailLabel = UILabel()
-            tipsDetailLabel.attributedText = getDetailAttributedString(text: "本协议不具备法律效应，仅供协议双方娱乐使用")
+            tipsDetailLabel.attributedText = getDetailAttributedString(text: "本记录仅用于促进双方沟通和相互理解，不具备任何法律效力。双方可随时重新沟通并更新意愿。")
+            tipsDetailLabel.numberOfLines = 0
             addSubview(tipsDetailLabel)
             tipsTitleLabel.snp.makeConstraints { make in
                 make.top.equalTo(additonalLabel.snp.bottom).offset(verticalSpacing)
@@ -224,42 +239,27 @@ class AgreementView: UIView {
                 make.left.right.equalToSuperview().inset(horizontalSpacing)
             }
             
-            let signTitleLabel = UILabel()
-            signTitleLabel.attributedText = getTtitleAttributedString(text: "协议签署")
-            addSubview(signTitleLabel)
-            let signSponsorLabel = UILabel()
-            signSponsorLabel.attributedText = getDetailAttributedString(text: "发起方:")
-            addSubview(signSponsorLabel)
-            let signSponsorDateLabel = UILabel()
-            signSponsorDateLabel.attributedText = getDetailAttributedString(text: "签署日期:")
-            addSubview(signSponsorDateLabel)
-            let signInviteeLabel = UILabel()
-            signInviteeLabel.attributedText = getDetailAttributedString(text: "被邀请方:")
-            addSubview(signInviteeLabel)
-            let signInviteeDateLabel = UILabel()
-            signInviteeDateLabel.attributedText = getDetailAttributedString(text: "签署日期:")
-            addSubview(signInviteeDateLabel)
-            signTitleLabel.snp.makeConstraints { make in
+            // 时间戳信息，而非签名
+            let timestampTitleLabel = UILabel()
+            timestampTitleLabel.attributedText = getTtitleAttributedString(text: "记录生成时间")
+            addSubview(timestampTitleLabel)
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
+            let currentDateString = formatter.string(from: Date())
+            
+            let timestampLabel = UILabel()
+            timestampLabel.attributedText = getDetailAttributedString(text: currentDateString)
+            addSubview(timestampLabel)
+            
+            timestampTitleLabel.snp.makeConstraints { make in
                 make.top.equalTo(tipsDetailLabel.snp.bottom).offset(verticalSpacing)
                 make.left.equalToSuperview().offset(horizontalSpacing)
             }
-            signSponsorLabel.snp.makeConstraints { make in
-                make.top.equalTo(signTitleLabel.snp.bottom).offset(10)
-                make.left.equalToSuperview().offset(horizontalSpacing)
-            }
-            signSponsorDateLabel.snp.makeConstraints { make in
-                make.top.equalTo(signSponsorLabel.snp.bottom).offset(10)
+            timestampLabel.snp.makeConstraints { make in
+                make.top.equalTo(timestampTitleLabel.snp.bottom).offset(10)
                 make.left.equalToSuperview().offset(horizontalSpacing)
                 make.bottom.equalToSuperview().inset(verticalSpacing)
-            }
-            signInviteeLabel.snp.makeConstraints { make in
-                make.top.equalTo(signSponsorLabel)
-//                make.left.equalToSuperview().offset(horizontalSpacing+150)
-                make.right.equalToSuperview().inset(horizontalSpacing+100)
-            }
-            signInviteeDateLabel.snp.makeConstraints { make in
-                make.top.equalTo(signSponsorDateLabel)
-                make.left.equalTo(signInviteeLabel)
             }
         }
     }
@@ -268,8 +268,14 @@ class AgreementView: UIView {
         let titleFont = UIFont.systemFont(ofSize: 14, weight: .medium)
         return attributionString(text, font: titleFont, color: hexColor(000000, alpha: 0.85), lineHeight: 20)
     }
+    
     private func getDetailAttributedString(text:String) -> NSAttributedString {
         let font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return attributionString(text, font: font, color: hexColor(000000, alpha: 0.65), lineHeight: 20)
+    }
+    
+    private func getDisclaimerAttributedString(text:String) -> NSAttributedString {
+        let font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        return attributionString(text, font: font, color: hexColor(0xFF0000, alpha: 0.85), lineHeight: 18)
     }
 }

@@ -19,7 +19,7 @@ class Create3VC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        title = "创建协议"
+        title = "创建沟通记录"
         let stepImageView = UIImageView(frame: CGRect(x: 0, y: kViewTopNaviHeight, width: view.bounds.width, height: view.bounds.width*72.0/375))
         stepImageView.image = UIImage(named: "create_step_3")
         view.addSubview(stepImageView)
@@ -38,8 +38,9 @@ class Create3VC: BaseViewController {
         checkButton.setImage(UIImage(named: "check_unselect"), for: .normal)
         checkBgView.addSubview(checkButton)
         let checkTipsLabel = UILabel()
-        let font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        checkTipsLabel.attributedText = attributionString("我已明确知悉该协议不具备法律效应，仅供协议双方娱乐使用", font: font, color: hexColor(000000, alpha: 0.65), lineHeight: 12)
+        checkTipsLabel.numberOfLines = 2
+        let font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        checkTipsLabel.attributedText = attributionString("我已明确知悉该记录仅作为沟通辅助工具，不具备任何法律效力，仅供参考使用", font: font, color: hexColor(000000, alpha: 0.65), lineHeight: 12)
         checkBgView.addSubview(checkTipsLabel)
         checkButton.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(20)
@@ -47,7 +48,9 @@ class Create3VC: BaseViewController {
             make.width.height.equalTo(16)
         }
         checkTipsLabel.snp.makeConstraints { make in
-            make.left.equalTo(checkButton.snp.right).offset(3)
+            make.left.equalTo(checkButton.snp.right).offset(8)
+            make.right.equalToSuperview().offset(-20)
+            make.top.bottom.equalToSuperview().inset(5)
             make.centerY.equalToSuperview()
         }
         weak var weakself = self
@@ -56,11 +59,11 @@ class Create3VC: BaseViewController {
         }), for: .touchUpInside)
         
         let nextButton = generalButton()
-        nextButton.setTitle("生成协议", for: .normal)
+        nextButton.setTitle("生成记录", for: .normal)
         view.addSubview(nextButton)
         nextButton.addAction(UIAction(handler: { _ in
             guard checkButton.isSelected else {
-                let alert = UIAlertController(title: nil, message: "请仔细阅读协议内容，并进行同意", preferredStyle: .alert)
+                let alert = UIAlertController(title: nil, message: "请仔细阅读沟通内容，并勾选确认", preferredStyle: .alert)
                 let action = UIAlertAction(title: "我已知晓", style: .default) { _ in
                     checkButton.isSelected.toggle()
                 }
@@ -103,7 +106,7 @@ class Create3VC: BaseViewController {
         checkBgView.snp.makeConstraints { make in
             make.bottom.equalTo(nextButton.snp.top).offset(-10)
             make.left.right.equalToSuperview()
-            make.height.equalTo(30)
+            make.height.greaterThanOrEqualTo(40)
         }
         let agreementView = AgreementView()
         scrollView.addSubview(agreementView)

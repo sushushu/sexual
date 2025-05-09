@@ -18,7 +18,7 @@ class MineAgreementListVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "我的协议"
+        title = "我的记录"
         
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: createLayout())
         collectionView.delegate = self

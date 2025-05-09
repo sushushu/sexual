@@ -32,7 +32,7 @@ class HomeVC: BaseViewController {
         
         let titleLabel = UILabel()
         let titleLabelFont = UIFont.systemFont(ofSize: 30, weight: .medium)
-        titleLabel.attributedText = attributionString("欢迎使用本协议", font: titleLabelFont, color: hexColor(0x000000, alpha: 0.85), lineHeight: 28)
+        titleLabel.attributedText = attributionString("欢迎使用亲密沟通记录", font: titleLabelFont, color: hexColor(0x000000, alpha: 0.85), lineHeight: 28)
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(120)
@@ -46,7 +46,7 @@ class HomeVC: BaseViewController {
         if totalCount == 0 {
             totalCount = 1428
         }
-        let string = "已有\(totalCount)名用户获得保障"
+        let string = "已有\(totalCount)名用户使用此工具"
         let random = Int.random(in: 1...10)
         UserDefaults.standard.set(totalCount+random, forKey: "totalCount")
         
@@ -71,7 +71,7 @@ class HomeVC: BaseViewController {
         }
         let contentTitleLabel = UILabel()
         let contentTitleLabelFont = UIFont.systemFont(ofSize: 15, weight: .medium)
-        contentTitleLabel.attributedText = attributionString("关于《亲密行为共识确认协议》", font: contentTitleLabelFont, color: hexColor(0x000000, alpha: 0.85), lineHeight: 21)
+        contentTitleLabel.attributedText = attributionString("关于亲密行为沟通记录", font: contentTitleLabelFont, color: hexColor(0x000000, alpha: 0.85), lineHeight: 21)
         contentBgView.addSubview(contentTitleLabel)
         contentTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(21)
@@ -80,17 +80,17 @@ class HomeVC: BaseViewController {
         let contentDetailLabel = UILabel()
         let contentDetailLabelText =
         """
-• 本协议是双方或多方在进行性活动前达成的行为共识
+• 本记录帮助双方在亲密行为前明确沟通意愿
 
-• 协议内容包括同意的范围、安全措施、隐私保护等 
+• 内容包括双方期望、安全措施和隐私保护等
 
-• 任何一方均有权随时撤回同意 
+• 任何一方均可随时改变意愿，无需解释原因
 
-• 协议遵循自愿、平等、真实的原则 
+• 遵循自愿、平等、真实的原则
 
-• 本系统生成的协议可导出为PDF保存
+• 记录可导出为PDF保存作为参考
 
-• 本协议不具备法律效应，仅供协议双方娱乐
+• 重要提示：此工具仅作为沟通辅助，不具备法律效力
 """
         let contentDetailLabelFont = UIFont.systemFont(ofSize: 13, weight: .regular)
         contentDetailLabel.attributedText = attributionString(contentDetailLabelText, font: contentDetailLabelFont, color: hexColor(0x000000, alpha: 0.65), lineHeight: 18)
@@ -109,7 +109,7 @@ class HomeVC: BaseViewController {
             make.height.equalTo(bottomViewHeight)
         }
         let applyButton = UIButton(type: .custom)
-        applyButton.setTitle("发起申请", for: .normal)
+        applyButton.setTitle("创建记录", for: .normal)
         applyButton.setTitleColor(.white, for: .normal)
         applyButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         applyButton.layer.cornerRadius = 10
@@ -123,7 +123,7 @@ class HomeVC: BaseViewController {
             make.height.equalTo(50)
         }
         let agreementButton = UIButton(type: .custom)
-        agreementButton.setTitle("我的协议", for: .normal)
+        agreementButton.setTitle("我的记录", for: .normal)
         agreementButton.setTitleColor(appThemeColor, for: .normal)
         agreementButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         agreementButton.layer.cornerRadius = 10
@@ -137,6 +137,25 @@ class HomeVC: BaseViewController {
             make.width.equalToSuperview().dividedBy(3.0)
             make.height.equalTo(50)
         }
+        
+        // 显示免责声明弹窗，如果用户第一次使用
+        if UserDefaults.standard.bool(forKey: "hasShownDisclaimer") == false {
+            showDisclaimerAlert()
+            UserDefaults.standard.set(true, forKey: "hasShownDisclaimer")
+        }
+    }
+    
+    /// 显示免责声明弹窗
+    private func showDisclaimerAlert() {
+        let alert = UIAlertController(
+            title: "重要提示",
+            message: "本工具仅用于辅助双方沟通意愿和边界，帮助建立相互尊重的关系。\n\n生成的内容仅为沟通参考，不具备任何法律效力，不应被视为正式文件。\n\n双方应通过持续对话确认意愿，任何人都可以随时改变意愿而无需解释。",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "我已了解", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
     }
     
     @objc func applyButtonClicked() {
