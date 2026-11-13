@@ -18,17 +18,19 @@ class MineAgreementListVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "我的记录"
+        title = "我的协议"
         
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: createLayout())
         collectionView.delegate = self
+        collectionView.backgroundColor = UIColor(white: 0.97, alpha: 1)
+        collectionView.contentInsetAdjustmentBehavior = .never
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
-            make.top.equalToSuperview().offset(kViewTopNaviHeight)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.bottom.equalToSuperview()
         }
-        emptyView.backgroundColor = .white
+        emptyView.backgroundColor = UIColor(white: 0.97, alpha: 1)
         view.addSubview(emptyView)
         emptyView.snp.makeConstraints { make in
             make.edges.equalTo(collectionView)
@@ -49,6 +51,8 @@ class MineAgreementListVC: BaseViewController {
         weak var weakself = self
         let layout = UICollectionViewCompositionalLayout.init { sectionIndex, layoutEnvironment in
             var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
+            configuration.showsSeparators = false
+            configuration.backgroundColor = .clear
             configuration.trailingSwipeActionsConfigurationProvider = { indexPath in
                 let action = UIContextualAction(style: .destructive, title: "删除", handler: {(action, view, completion) in
                     print("swipe action triggered!?")
@@ -61,7 +65,7 @@ class MineAgreementListVC: BaseViewController {
             }
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
             section.interGroupSpacing = 10
-            section.contentInsets = .init(top: 20, leading: 0, bottom: 0, trailing: 0)
+            section.contentInsets = .init(top: 16, leading: 16, bottom: 24, trailing: 16)
             return section
         }
         return layout

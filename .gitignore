@@ -1,0 +1,11 @@
+.DS_Store
+._*
+Pods/
+*.xcworkspace/
+!sexual.xcworkspace/
+sexual.xcworkspace/*
+!sexual.xcworkspace/contents.xcworkspacedata
+xcuserdata/
+DerivedData/
+build/
+*.pbxproj.bak.*

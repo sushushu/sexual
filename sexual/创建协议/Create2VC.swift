@@ -33,7 +33,7 @@ class Create2VC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        title = "创建沟通记录"
+        title = "创建协议"
         let stepImageView = UIImageView(frame: CGRect(x: 0, y: kViewTopNaviHeight, width: view.bounds.width, height: view.bounds.width*72.0/375))
         stepImageView.image = UIImage(named: "create_step_2")
         view.addSubview(stepImageView)
@@ -109,11 +109,11 @@ class Create2VC: BaseViewController {
             }
             switch section {
             case .privacy:
-                headerView.configure(isRequired: false, title: "隐私说明", tips: "")
+                headerView.configure(isRequired: false, title: "隐私条款", tips: "")
             case .regret:
-                headerView.configure(isRequired: false, title: "意愿变更说明", tips: "")
+                headerView.configure(isRequired: false, title: "撤回同意条款", tips: "")
             case .additional:
-                headerView.configure(isRequired: false, title: "补充说明", tips: "(可选)")
+                headerView.configure(isRequired: false, title: "额外条款", tips: "(可选)")
             }
         }
         dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in

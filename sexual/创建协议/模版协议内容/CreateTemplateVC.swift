@@ -15,9 +15,9 @@ class CreateTemplateVC: BaseViewController {
         var text:String {
             switch self {
             case .base:
-                return "我们双方在完全自愿、理性和清醒的状态下，表达希望进行亲密行为的意愿。我们确认彼此已经达到法定成年年龄，并且对可能发生的行为有充分理解。我们愿意相互尊重对方的边界和意愿，任何一方都可以随时改变意愿而无需解释原因。"
+                return "我们双方在完全自愿、理性和清醒的状态下，同意进行亲密行为。我们确认彼此已经达到法定成年年龄，并且对可能发生的行为有充分理解。我们承诺相互尊重对方的边界和意愿，任何一方都有权随时终止行为而无需解释原因。"
             case .detail:
-                return "我们双方在完全自愿、理性和清醒的状态下，表达希望进行亲密行为的意愿。我们确认彼此已经达到法定成年年龄，并且对可能发生的行为有充分理解。我们已经讨论并确认了可接受的互动范围，包括但不限于哪些行为是舒适的，哪些是不希望的。我们将在整个过程中保持沟通，并尊重彼此设定的边界。我们理解，即使之前表达过某种意愿，任何一方在任何时候都可以改变主意。"
+                return "我们双方在完全自愿、理性和清醒的状态下，同意进行亲密行为。我们确认彼此已经达到法定成年年龄，并且对可能发生的行为有充分理解。我们已经讨论并同意了可接受的互动范围，包括但不限于哪些行为是可以的，哪些是不可接受的。我们将在整个过程中保持沟通，并尊重彼此设定的边界。我们理解，即使之前同意了某种行为，任何一方在任何时候都有权改变主意。"
             }
         }
     }
@@ -54,7 +54,7 @@ class CreateTemplateVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "沟通内容"
+        title = "协议内容"
         
         // 设置初始内容
         currentContent = type.text
@@ -132,7 +132,7 @@ class CreateTemplateVC: BaseViewController {
             }
             switch section {
             case .content:
-                headerView.configure(isRequired: false, title: "沟通内容", tips: "")
+                headerView.configure(isRequired: false, title: "协议内容", tips: "")
             case .conditions:
                 headerView.configure(isRequired: false, title: "安全措施", tips: "")
             }

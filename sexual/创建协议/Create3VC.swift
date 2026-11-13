@@ -19,7 +19,7 @@ class Create3VC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        title = "创建沟通记录"
+        title = "创建协议"
         let stepImageView = UIImageView(frame: CGRect(x: 0, y: kViewTopNaviHeight, width: view.bounds.width, height: view.bounds.width*72.0/375))
         stepImageView.image = UIImage(named: "create_step_3")
         view.addSubview(stepImageView)
@@ -40,7 +40,7 @@ class Create3VC: BaseViewController {
         let checkTipsLabel = UILabel()
         checkTipsLabel.numberOfLines = 2
         let font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        checkTipsLabel.attributedText = attributionString("我已明确知悉该记录仅作为沟通辅助工具，不具备任何法律效力，仅供参考使用", font: font, color: hexColor(000000, alpha: 0.65), lineHeight: 12)
+        checkTipsLabel.attributedText = attributionString("我已知悉协议仅供沟通参考，任何一方都可以随时撤回同意", font: font, color: hexColor(000000, alpha: 0.65), lineHeight: 12)
         checkBgView.addSubview(checkTipsLabel)
         checkButton.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(20)
@@ -59,11 +59,11 @@ class Create3VC: BaseViewController {
         }), for: .touchUpInside)
         
         let nextButton = generalButton()
-        nextButton.setTitle("生成记录", for: .normal)
+        nextButton.setTitle("生成协议", for: .normal)
         view.addSubview(nextButton)
         nextButton.addAction(UIAction(handler: { _ in
             guard checkButton.isSelected else {
-                let alert = UIAlertController(title: nil, message: "请仔细阅读沟通内容，并勾选确认", preferredStyle: .alert)
+                let alert = UIAlertController(title: nil, message: "请仔细阅读协议内容，并勾选确认", preferredStyle: .alert)
                 let action = UIAlertAction(title: "我已知晓", style: .default) { _ in
                     checkButton.isSelected.toggle()
                 }

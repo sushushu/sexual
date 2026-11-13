@@ -17,7 +17,7 @@ class ListEmptyView: UIView {
     
     private lazy var tipLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = attributionString("暂无记录", font: UIFont.systemFont(ofSize: 14, weight: .regular), color: hexColor(0x000000, alpha: 0.45), lineHeight: 20)
+        label.attributedText = attributionString("暂无协议", font: UIFont.systemFont(ofSize: 14, weight: .regular), color: hexColor(0x000000, alpha: 0.45), lineHeight: 20)
         return label
     }()
     

@@ -32,7 +32,7 @@ class HomeVC: BaseViewController {
         
         let titleLabel = UILabel()
         let titleLabelFont = UIFont.systemFont(ofSize: 30, weight: .medium)
-        titleLabel.attributedText = attributionString("欢迎使用亲密沟通记录", font: titleLabelFont, color: hexColor(0x000000, alpha: 0.85), lineHeight: 28)
+        titleLabel.attributedText = attributionString("欢迎使用性同意协议", font: titleLabelFont, color: hexColor(0x000000, alpha: 0.85), lineHeight: 28)
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(120)
@@ -42,18 +42,7 @@ class HomeVC: BaseViewController {
         countLabel.textColor = hexColor(0x3F6DF3)
         countLabel.font = UIFont.systemFont(ofSize: 25, weight: .medium)
         
-        var totalCount = UserDefaults.standard.integer(forKey: "totalCount")
-        if totalCount == 0 {
-            totalCount = 1428
-        }
-        let string = "已有\(totalCount)名用户使用此工具"
-        let random = Int.random(in: 1...10)
-        UserDefaults.standard.set(totalCount+random, forKey: "totalCount")
-        
-        let attributedString = NSMutableAttributedString(string: string)
-        let range = (string as NSString).range(of: "123445")
-        attributedString.addAttribute(.foregroundColor, value: appThemeColor, range: range)
-        countLabel.attributedText = attributionString(attributedString, lineHeight: 28)
+        countLabel.attributedText = attributionString("尊重意愿，随时可以撤回同意", font: countLabel.font, color: appThemeColor, lineHeight: 28)
         contentView.addSubview(countLabel)
         countLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
@@ -71,7 +60,7 @@ class HomeVC: BaseViewController {
         }
         let contentTitleLabel = UILabel()
         let contentTitleLabelFont = UIFont.systemFont(ofSize: 15, weight: .medium)
-        contentTitleLabel.attributedText = attributionString("关于亲密行为沟通记录", font: contentTitleLabelFont, color: hexColor(0x000000, alpha: 0.85), lineHeight: 21)
+        contentTitleLabel.attributedText = attributionString("关于性同意协议", font: contentTitleLabelFont, color: hexColor(0x000000, alpha: 0.85), lineHeight: 21)
         contentBgView.addSubview(contentTitleLabel)
         contentTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(21)
@@ -80,17 +69,15 @@ class HomeVC: BaseViewController {
         let contentDetailLabel = UILabel()
         let contentDetailLabelText =
         """
-• 本记录帮助双方在亲密行为前明确沟通意愿
+• 性同意协议记录双方对亲密行为的意愿
 
-• 内容包括双方期望、安全措施和隐私保护等
+• 内容包括同意的范围、安全措施和隐私保护
 
-• 任何一方均可随时改变意愿，无需解释原因
+• 任何一方均有权随时撤回同意
 
-• 遵循自愿、平等、真实的原则
+• 双方应遵循自愿、平等、真实的原则
 
-• 记录可导出为PDF保存作为参考
-
-• 重要提示：此工具仅作为沟通辅助，不具备法律效力
+• 协议可导出为 PDF 保存
 """
         let contentDetailLabelFont = UIFont.systemFont(ofSize: 13, weight: .regular)
         contentDetailLabel.attributedText = attributionString(contentDetailLabelText, font: contentDetailLabelFont, color: hexColor(0x000000, alpha: 0.65), lineHeight: 18)
@@ -109,7 +96,7 @@ class HomeVC: BaseViewController {
             make.height.equalTo(bottomViewHeight)
         }
         let applyButton = UIButton(type: .custom)
-        applyButton.setTitle("创建记录", for: .normal)
+        applyButton.setTitle("发起申请", for: .normal)
         applyButton.setTitleColor(.white, for: .normal)
         applyButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         applyButton.layer.cornerRadius = 10
@@ -123,7 +110,7 @@ class HomeVC: BaseViewController {
             make.height.equalTo(50)
         }
         let agreementButton = UIButton(type: .custom)
-        agreementButton.setTitle("我的记录", for: .normal)
+        agreementButton.setTitle("我的协议", for: .normal)
         agreementButton.setTitleColor(appThemeColor, for: .normal)
         agreementButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         agreementButton.layer.cornerRadius = 10
@@ -148,12 +135,12 @@ class HomeVC: BaseViewController {
     /// 显示免责声明弹窗
     private func showDisclaimerAlert() {
         let alert = UIAlertController(
-            title: "重要提示",
-            message: "本工具仅用于辅助双方沟通意愿和边界，帮助建立相互尊重的关系。\n\n生成的内容仅为沟通参考，不具备任何法律效力，不应被视为正式文件。\n\n双方应通过持续对话确认意愿，任何人都可以随时改变意愿而无需解释。",
+            title: "重要声明",
+            message: "本应用是一个沟通辅助工具，不是法律文件生成器。\n\n本工具仅用于帮助双方更好地沟通和了解彼此的想法，生成的任何内容都不具备法律约束力。\n\n真正的同意只能通过当面的、持续的沟通来确认，任何书面记录都无法替代实时的沟通与确认。\n\n请将此工具视为沟通的起点，而非终点。",
             preferredStyle: .alert
         )
         
-        alert.addAction(UIAlertAction(title: "我已了解", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "我明白这只是沟通工具", style: .default, handler: nil))
         
         self.present(alert, animated: true)
     }

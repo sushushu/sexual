@@ -519,14 +519,7 @@ public class OverlayController: NSObject, UIGestureRecognizerDelegate {
 private extension OverlayController {
     
     func findWindow() -> UIWindow? {
-        if let window = UIApplication.shared.delegate?.window as? UIWindow {
-            return window;
-        }
-        if #available(iOS 13.0, *) {
-            return UIApplication.shared.windows.first
-        } else {
-            return UIApplication.shared.keyWindow
-        }
+        kCurrentWindow
     }
 }
 

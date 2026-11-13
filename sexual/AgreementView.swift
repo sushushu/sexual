@@ -13,26 +13,12 @@ class AgreementView: UIView {
     
     
     func setupUI(model:AgreementModel, isSign: Bool) {
-        // 添加免责声明在顶部
-        let disclaimerLabel = UILabel()
-        disclaimerLabel.attributedText = getDisclaimerAttributedString(text: "此记录仅代表沟通时的意愿，可能随实际情况变化。不具备任何法律效力，仅用于促进双方沟通。")
-        disclaimerLabel.numberOfLines = 0
-        disclaimerLabel.textAlignment = .center
-        disclaimerLabel.backgroundColor = hexColor(0xFFECEC)
-        disclaimerLabel.layer.cornerRadius = 5
-        disclaimerLabel.layer.masksToBounds = true
-        addSubview(disclaimerLabel)
-        disclaimerLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(verticalSpacing/2)
-            make.left.right.equalToSuperview().inset(horizontalSpacing/2)
-        }
-        
         let titleLabel = UILabel()
         titleLabel.textAlignment = .center
         addSubview(titleLabel)
         titleLabel.text = model.title
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(disclaimerLabel.snp.bottom).offset(verticalSpacing)
+            make.top.equalToSuperview().offset(verticalSpacing)
             make.left.right.equalToSuperview().inset(horizontalSpacing)
         }
         
@@ -52,72 +38,76 @@ class AgreementView: UIView {
         }
         
         let sponsorLabel1 = UILabel()
-        sponsorLabel1.attributedText = getTtitleAttributedString(text: "发起方:")
+        sponsorLabel1.attributedText = getTtitleAttributedString(text: "发起方")
         addSubview(sponsorLabel1)
         let sponsorLabel2 = UILabel()
         sponsorLabel2.attributedText = getDetailAttributedString(text: model.sponsor)
+        sponsorLabel2.numberOfLines = 0
         addSubview(sponsorLabel2)
         let sponsorLabel3 = UILabel()
-        sponsorLabel3.attributedText = getTtitleAttributedString(text: "身份证号:")
+        sponsorLabel3.attributedText = getTtitleAttributedString(text: "身份证号")
         addSubview(sponsorLabel3)
         let sponsorLabel4 = UILabel()
         sponsorLabel4.attributedText = getDetailAttributedString(text: model.sponsorCardId)
+        sponsorLabel4.numberOfLines = 0
         addSubview(sponsorLabel4)
         sponsorLabel1.snp.makeConstraints { make in
             make.top.equalTo(createDateLabel.snp.bottom).offset(verticalSpacing)
-            make.left.equalToSuperview().offset(horizontalSpacing)
+            make.left.right.equalToSuperview().inset(horizontalSpacing)
         }
         sponsorLabel2.snp.makeConstraints { make in
-            make.left.equalTo(sponsorLabel1.snp.right).offset(10)
-            make.centerY.equalTo(sponsorLabel1)
+            make.top.equalTo(sponsorLabel1.snp.bottom)
+            make.left.right.equalToSuperview().inset(horizontalSpacing)
         }
         sponsorLabel3.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(horizontalSpacing+150)
-            make.centerY.equalTo(sponsorLabel1)
+            make.top.equalTo(sponsorLabel2.snp.bottom).offset(verticalSpacing / 2)
+            make.left.right.equalToSuperview().inset(horizontalSpacing)
         }
         sponsorLabel4.snp.makeConstraints { make in
-            make.left.equalTo(sponsorLabel3.snp.right).offset(10)
-            make.centerY.equalTo(sponsorLabel1)
+            make.top.equalTo(sponsorLabel3.snp.bottom)
+            make.left.right.equalToSuperview().inset(horizontalSpacing)
         }
-        
+
         let inviteeLabel1 = UILabel()
-        inviteeLabel1.attributedText = getTtitleAttributedString(text: "受邀方:")
+        inviteeLabel1.attributedText = getTtitleAttributedString(text: "被邀请方")
         addSubview(inviteeLabel1)
         let inviteeLabel2 = UILabel()
         inviteeLabel2.attributedText = getDetailAttributedString(text: model.invitee)
+        inviteeLabel2.numberOfLines = 0
         addSubview(inviteeLabel2)
         let inviteeLabel3 = UILabel()
-        inviteeLabel3.attributedText = getTtitleAttributedString(text: "身份证号:")
+        inviteeLabel3.attributedText = getTtitleAttributedString(text: "身份证号")
         addSubview(inviteeLabel3)
         let inviteeLabel4 = UILabel()
         inviteeLabel4.attributedText = getDetailAttributedString(text: model.inviteeCardId)
+        inviteeLabel4.numberOfLines = 0
         addSubview(inviteeLabel4)
         inviteeLabel1.snp.makeConstraints { make in
-            make.top.equalTo(sponsorLabel1.snp.bottom).offset(verticalSpacing)
-            make.left.equalToSuperview().offset(horizontalSpacing)
+            make.top.equalTo(sponsorLabel4.snp.bottom).offset(verticalSpacing)
+            make.left.right.equalToSuperview().inset(horizontalSpacing)
         }
         inviteeLabel2.snp.makeConstraints { make in
-            make.left.equalTo(inviteeLabel1.snp.right).offset(10)
-            make.centerY.equalTo(inviteeLabel1)
+            make.top.equalTo(inviteeLabel1.snp.bottom)
+            make.left.right.equalToSuperview().inset(horizontalSpacing)
         }
         inviteeLabel3.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(horizontalSpacing+150)
-            make.centerY.equalTo(inviteeLabel1)
+            make.top.equalTo(inviteeLabel2.snp.bottom).offset(verticalSpacing / 2)
+            make.left.right.equalToSuperview().inset(horizontalSpacing)
         }
         inviteeLabel4.snp.makeConstraints { make in
-            make.left.equalTo(inviteeLabel3.snp.right).offset(10)
-            make.centerY.equalTo(inviteeLabel1)
+            make.top.equalTo(inviteeLabel3.snp.bottom)
+            make.left.right.equalToSuperview().inset(horizontalSpacing)
         }
-        
+
         let contentTitleLabel = UILabel()
-        contentTitleLabel.attributedText = getTtitleAttributedString(text: "沟通内容")
+        contentTitleLabel.attributedText = getTtitleAttributedString(text: "协议详情")
         addSubview(contentTitleLabel)
         let contentLabel = UILabel()
         contentLabel.attributedText = getDetailAttributedString(text: model.content)
         contentLabel.numberOfLines = 0
         addSubview(contentLabel)
         contentTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(inviteeLabel1.snp.bottom).offset(verticalSpacing)
+            make.top.equalTo(inviteeLabel4.snp.bottom).offset(verticalSpacing)
             make.left.equalToSuperview().offset(horizontalSpacing)
         }
         contentLabel.snp.makeConstraints { make in
@@ -155,7 +145,7 @@ class AgreementView: UIView {
         
         let ccLabel = conditionLabel ?? contentLabel
         let timeTitleLabel = UILabel()
-        timeTitleLabel.attributedText = getTtitleAttributedString(text: "沟通时间")
+        timeTitleLabel.attributedText = getTtitleAttributedString(text: "约定时间")
         addSubview(timeTitleLabel)
         let timeLabel = UILabel()
         timeLabel.attributedText = getDetailAttributedString(text: "\(model.startDate)-\(model.endDate)")
@@ -170,7 +160,7 @@ class AgreementView: UIView {
         }
         
         let privacyTitleLabel = UILabel()
-        privacyTitleLabel.attributedText = getTtitleAttributedString(text: "隐私说明")
+        privacyTitleLabel.attributedText = getTtitleAttributedString(text: "隐私条款")
         addSubview(privacyTitleLabel)
         let privacyLabel = UILabel()
         privacyLabel.attributedText = getDetailAttributedString(text: model.privacy)
@@ -186,7 +176,7 @@ class AgreementView: UIView {
         }
         
         let regretTitleLabel = UILabel()
-        regretTitleLabel.attributedText = getTtitleAttributedString(text: "意愿变更说明")
+        regretTitleLabel.attributedText = getTtitleAttributedString(text: "撤回同意条款")
         addSubview(regretTitleLabel)
         let regreLabel = UILabel()
         regreLabel.attributedText = getDetailAttributedString(text: model.regret)
@@ -202,7 +192,7 @@ class AgreementView: UIView {
         }
         
         let additonalTitleLabel = UILabel()
-        additonalTitleLabel.attributedText = getTtitleAttributedString(text: "补充说明")
+        additonalTitleLabel.attributedText = getTtitleAttributedString(text: "附加条款")
         addSubview(additonalTitleLabel)
         let additonalLabel = UILabel()
         additonalLabel.attributedText = getDetailAttributedString(text: model.additional.isEmpty ? "无" : model.additional)
@@ -274,8 +264,5 @@ class AgreementView: UIView {
         return attributionString(text, font: font, color: hexColor(000000, alpha: 0.65), lineHeight: 20)
     }
     
-    private func getDisclaimerAttributedString(text:String) -> NSAttributedString {
-        let font = UIFont.systemFont(ofSize: 13, weight: .bold)
-        return attributionString(text, font: font, color: hexColor(0xFF0000, alpha: 0.85), lineHeight: 18)
-    }
+
 }

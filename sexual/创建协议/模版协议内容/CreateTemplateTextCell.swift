@@ -8,7 +8,7 @@ class CreateTemplateTextCell: UICollectionViewCell {
     /// 文本编辑框
     private lazy var textView: PlaceholderTextView = {
         let tv = PlaceholderTextView()
-        tv.placeholder = "请输入沟通内容"
+        tv.placeholder = "请输入协议内容"
         tv.font = .systemFont(ofSize: 15)
         tv.textColor = hexColor(0x676767)
         tv.backgroundColor = .clear

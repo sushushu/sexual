@@ -24,7 +24,7 @@ class CreateTemplateCell: UICollectionViewCell {
     }()
     private let button: UIButton = {
         let button = UIButton()
-        button.setTitle("使用该内容模板", for: .normal)
+        button.setTitle("使用该模板", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = appThemeColor
         button.layer.cornerRadius = 5

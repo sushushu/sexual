@@ -44,7 +44,7 @@ class Create1VC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        title = "创建沟通记录"
+        title = "创建协议"
         let stepImageView = UIImageView(frame: CGRect(x: 0, y: kViewTopNaviHeight, width: view.bounds.width, height: view.bounds.width*72.0/375))
         stepImageView.image = UIImage(named: "create_step_1")
         view.addSubview(stepImageView)
@@ -143,7 +143,7 @@ class Create1VC: BaseViewController {
             case .templateTitle(let isSpread):
                 cell.setArrow(show: true, isExpand: isSpread)
                 cell.setTextFieldEnabled(false)
-                cell.setText("选择沟通内容模板")
+                cell.setText("选择协议内容模板")
             case .sponsor(let text):
                 cell.setText(text)
                 cell.configure(placeholder: "请输入发起人姓名")
@@ -182,7 +182,7 @@ class Create1VC: BaseViewController {
             cell.backgroundColor = hexColor(0xF7F7F8)
             switch itemIdentifier {
             case .templateBase:
-                cell.configure(title: "基础沟通模板", detail: "包含基本的意愿表达和安全措施")
+                cell.configure(title: "基础同意协议", detail: "最基本的性同意协议，包含必要的同意表述和安全措施")
                 cell.buttonAction = {
                     let vc = CreateTemplateVC(type: .base)
                     weakself?.navigationController?.pushViewController(vc, animated: true)
@@ -193,7 +193,7 @@ class Create1VC: BaseViewController {
                     }
                 }
             case .templateDetail:
-                cell.configure(title: "详细沟通模板", detail: "更详细的沟通内容，包含具体行为边界和个人偏好")
+                cell.configure(title: "详细同意协议", detail: "更详细的性同意协议，包含具体行为边界和个人偏好")
                 cell.buttonAction = {
                     let vc = CreateTemplateVC(type: .detail)
                     weakself?.navigationController?.pushViewController(vc, animated: true)
@@ -247,19 +247,19 @@ class Create1VC: BaseViewController {
             }
             switch section {
             case .title:
-                headerView.configure(isRequired: true, title: "记录标题", tips: "")
+                headerView.configure(isRequired: true, title: "协议标题", tips: "")
             case .agreement:
-                headerView.configure(isRequired: true, title: "沟通内容", tips: "")
+                headerView.configure(isRequired: true, title: "协议内容", tips: "")
             case .agreementConditions:
                 headerView.configure(isRequired: false, title: "安全措施", tips: "")
             case .time:
-                headerView.configure(isRequired: true, title: "沟通时间", tips: "")
+                headerView.configure(isRequired: true, title: "约定时间", tips: "")
             case .sponsor:
                 headerView.configure(isRequired: true, title: "发起方", tips: "")
             case .sponsorCardId:
                 headerView.configure(isRequired: false, title: "身份账号", tips: "(选填)")
             case .invitee:
-                headerView.configure(isRequired: true, title: "受邀方", tips: "")
+                headerView.configure(isRequired: true, title: "被邀请方", tips: "")
             case .inviteeCardId:
                 headerView.configure(isRequired: false, title: "身份证号", tips: "(选填)")
             }
